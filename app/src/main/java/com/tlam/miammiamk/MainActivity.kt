@@ -5,21 +5,22 @@ import android.support.v7.app.AppCompatActivity
 import android.widget.AdapterView
 import android.widget.ListView
 import android.widget.Toast
-import com.tlam.miammiamk.adapters.CuisinesListViewAdapter
-import com.tlam.miammiamk.models.Cuisines
+import com.tlam.miammiamk.adapters.CuisineListViewAdapter
+import com.tlam.miammiamk.models.Cuisine
+import com.tlam.miammiamk.models.Food
 
 class MainActivity : AppCompatActivity() {
 
     var listView: ListView? = null
-    var cuisineList = ArrayList<Cuisines>()
-    var adapter: CuisinesListViewAdapter? = null
+    var cuisineList = ArrayList<Cuisine>()
+    var adapter: CuisineListViewAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         listView = findViewById<ListView>(R.id.list)
-        adapter = CuisinesListViewAdapter(this, cuisineList)
+        adapter = CuisineListViewAdapter(this, cuisineList)
         (listView as ListView).adapter = adapter
 
         prepareCuisineData()
@@ -31,13 +32,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun prepareCuisineData() {
-        var cuisine = Cuisines("Japanese", "Asian")
+        var cuisine = Cuisine("Japanese", "Asian", listOf(Food("Maki"), Food("Sushi")))
         cuisineList.add(cuisine)
 
-        cuisine = Cuisines("Italian", "European")
+        cuisine = Cuisine("Italian", "European", listOf(Food("Farfalle"), Food("Spaghetti")))
         cuisineList.add(cuisine)
 
-        cuisine = Cuisines("Mexican", "Central America")
+        cuisine = Cuisine("Mexican", "Central America", listOf(Food("Enchilada"), Food("Fajita")))
         cuisineList.add(cuisine)
 
         adapter?.notifyDataSetChanged()

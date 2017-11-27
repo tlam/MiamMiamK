@@ -10,18 +10,20 @@ import android.widget.BaseAdapter
 import android.widget.TextView
 
 import com.tlam.miammiamk.R
-import com.tlam.miammiamk.models.Cuisines
+import com.tlam.miammiamk.models.Cuisine
 
 import java.util.ArrayList
 
 
 
-class CuisinesListViewAdapter(private val activity: Activity, cuisineList: List<Cuisines>) : BaseAdapter() {
+class CuisineListViewAdapter(
+        private val activity: Activity,
+        cuisineList: List<Cuisine>) : BaseAdapter() {
 
-    private var cuisineList = ArrayList<Cuisines>()
+    private var cuisineList = ArrayList<Cuisine>()
 
     init {
-        this.cuisineList = cuisineList as ArrayList<Cuisines>
+        this.cuisineList = cuisineList as ArrayList<Cuisine>
     }
 
     override fun getCount(): Int {
