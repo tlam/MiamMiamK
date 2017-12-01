@@ -14,7 +14,6 @@ import com.tlam.miammiamk.models.Food
 import java.util.ArrayList
 
 
-
 class FoodListViewAdapter(
         private val activity: Activity,
         foodList: List<Food>) : BaseAdapter() {

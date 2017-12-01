@@ -2,33 +2,30 @@ package com.tlam.miammiamk
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.widget.AdapterView
-import android.widget.ListView
-import android.widget.Toast
-import com.tlam.miammiamk.adapters.CuisineListViewAdapter
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
+import com.tlam.miammiamk.adapters.CuisineRecyclerViewAdapter
 import com.tlam.miammiamk.models.Cuisine
 import com.tlam.miammiamk.models.Food
 
 class MainActivity : AppCompatActivity() {
 
-    var listView: ListView? = null
+    private lateinit var linearLayoutManager: LinearLayoutManager
+    var recyclerView: RecyclerView? = null
     var cuisineList = ArrayList<Cuisine>()
-    var adapter: CuisineListViewAdapter? = null
+    var adapter: CuisineRecyclerViewAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        listView = findViewById<ListView>(R.id.list)
-        adapter = CuisineListViewAdapter(this, cuisineList)
-        (listView as ListView).adapter = adapter
+        adapter = CuisineRecyclerViewAdapter(cuisineList)
+        recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
+        linearLayoutManager = LinearLayoutManager(this)
+        recyclerView!!.layoutManager = linearLayoutManager
+        recyclerView!!.adapter = adapter
 
         prepareCuisineData()
-
-        (listView as ListView).onItemClickListener = AdapterView.OnItemClickListener {
-            adapterView, view, i,
-            l -> Toast.makeText(applicationContext, cuisineList?.get(i)?.title, Toast.LENGTH_SHORT).show()
-        }
     }
 
     private fun prepareCuisineData() {
