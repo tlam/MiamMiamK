@@ -1,6 +1,6 @@
 package com.tlam.miammiamk.models
 
-class Cuisine {
+class Cuisine  {
     var title: String = ""
     var genre: String = ""
     var foods: List<Food> = listOf()
