@@ -14,6 +14,6 @@ class FoodListActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.food_list)
 
-        cuisine = intent.getSerializableExtra(CUISINE_KEY) as Cuisine
+        cuisine = intent.getParcelableExtra<Cuisine>(CUISINE_KEY)
     }
 }

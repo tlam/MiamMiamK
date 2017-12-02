@@ -33,29 +33,18 @@ class CuisineRecyclerViewAdapter(private val cuisineList: List<Cuisine>) : Recyc
             //Toast.makeText(context, "HELLO", Toast.LENGTH_SHORT).show()
 
             val showFoodListIntent = Intent(context, FoodListActivity::class.java)
-            showFoodListIntent.putExtra(CUISINE_KEY, this.cuisine.title)
+            showFoodListIntent.putExtra(CUISINE_KEY, this.cuisine)
             context.startActivity(showFoodListIntent)
         }
 
         fun bindCuisine(cuisine: Cuisine) {
             this.cuisine = cuisine
-            /*
-            Picasso.with(view.context).load(photo.url).into(view.itemImage)
-            view.itemDate.text = photo.humanDate
-            view.itemDescription.text = photo.explanation
-            */
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CuisineHolder {
         val itemView = LayoutInflater.from(parent.context)
                 .inflate(R.layout.cuisine_list_row, parent, false)
-/*
-        mUserList.setOnUserClickListener(User user -> {
-            final Intent intent = UserDetailActivity.newIntent(this, user);
-            startActivity(intent);
-        })
-  */
         return CuisineHolder(itemView)
     }
 
