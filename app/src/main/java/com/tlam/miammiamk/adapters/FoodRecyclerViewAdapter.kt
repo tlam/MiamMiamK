@@ -45,37 +45,4 @@ class FoodRecyclerViewAdapter(private val foodList: List<Food>) : RecyclerView.A
     override fun getItemCount(): Int {
         return foodList.size
     }
-/*
-    private var foodList = ArrayList<Food>()
-
-    init {
-        this.foodList = foodList as ArrayList<Food>
-    }
-
-    override fun getCount(): Int {
-        return foodList.size
-    }
-
-    override fun getItem(i: Int): Any {
-        return i
-    }
-
-    override fun getItemId(i: Int): Long {
-        return i.toLong()
-    }
-
-    override fun getView(i: Int, convertView: View?, viewGroup: ViewGroup): View? {
-        val vi: View?
-
-        if (convertView == null) {
-            val inflater = activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-            vi = inflater.inflate(R.layout.food_list, null)
-            // TODO: how to fill that list?
-
-        } else {
-            vi = convertView
-        }
-        return vi
-    }
-    */
 }
