@@ -33,24 +33,24 @@ class MainActivity : AppCompatActivity() {
                 "Japanese",
                 "Asian",
                 listOf(
-                        Food("Makizushi", "Cylindrical piece"),
-                        Food("Nigirizushi", "Topping on oval shaped ball of rice")))
+                        Food("Makizushi", "Cylindrical piece", "https://cdn.pixabay.com/photo/2017/02/05/11/48/sushi-2039735__340.jpg"),
+                        Food("Nigirizushi", "Topping on oval shaped ball of rice", "https://cdn.pixabay.com/photo/2016/03/05/22/23/asian-1239272__340.jpg")))
         cuisineList.add(cuisine)
 
         cuisine = Cuisine(
                 "Italian",
                 "European",
                 listOf(
-                        Food("Farfalle", "Butterfly looking"),
-                        Food("Spaghetti", "Long, thin and cylindrical")))
+                        Food("Farfalle", "Butterfly looking", "nigirizushi"),
+                        Food("Spaghetti", "Long, thin and cylindrical", "nigirizushi")))
         cuisineList.add(cuisine)
 
         cuisine = Cuisine(
                 "Mexican",
                 "Central America",
                 listOf(
-                        Food("Enchilada", "Corn tortilla rolled around a filling and covered with a chili pepper sauce"),
-                        Food("Fajita", "Any grilled meat usually served as a taco")))
+                        Food("Enchilada", "Corn tortilla rolled around a filling and covered with a chili pepper sauce", "nigirizushi"),
+                        Food("Fajita", "Any grilled meat usually served as a taco", "nigirizushi")))
         cuisineList.add(cuisine)
 
         adapter?.notifyDataSetChanged()

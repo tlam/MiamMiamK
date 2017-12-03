@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import com.bumptech.glide.Glide
 
 import com.tlam.miammiamk.R
 import com.tlam.miammiamk.models.Food
@@ -30,6 +31,9 @@ class FoodRecyclerViewAdapter(private val foodList: List<Food>) : RecyclerView.A
 
         fun bindFood(food: Food) {
             this.food = food
+            Glide.with(this.itemView)
+                    .load(food.source)
+                    .into(this.image)
         }
     }
 
@@ -44,7 +48,7 @@ class FoodRecyclerViewAdapter(private val foodList: List<Food>) : RecyclerView.A
         holder.bindFood(food)
         holder.title.text = food.title
         holder.description.text = food.description
-        holder.image.setImageResource(R.drawable.nigirizushi)
+        //holder.image.setImageResource(R.drawable.nigirizushi)
     }
 
     override fun getItemCount(): Int {
