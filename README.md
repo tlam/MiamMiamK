@@ -1,6 +1,7 @@
 TODO
 
-- Use RecyclerView instead of ListView
+- Rest API calls
+- Check images at https://pixabay.com/
 
 Reference
 

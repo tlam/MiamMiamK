@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 
 import com.tlam.miammiamk.R
@@ -16,6 +17,8 @@ class FoodRecyclerViewAdapter(private val foodList: List<Food>) : RecyclerView.A
         private var food: Food? = null
 
         var title: TextView = view.findViewById<TextView>(R.id.title)
+        var description: TextView = view.findViewById<TextView>(R.id.description)
+        var image: ImageView = view.findViewById<ImageView>(R.id.imageView)
 
         init {
             view.setOnClickListener(this)
@@ -40,6 +43,8 @@ class FoodRecyclerViewAdapter(private val foodList: List<Food>) : RecyclerView.A
         val food = foodList[position]
         holder.bindFood(food)
         holder.title.text = food.title
+        holder.description.text = food.description
+        holder.image.setImageResource(R.drawable.nigirizushi)
     }
 
     override fun getItemCount(): Int {
