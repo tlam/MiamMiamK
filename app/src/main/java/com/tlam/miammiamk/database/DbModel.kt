@@ -1,4 +1,4 @@
 package com.tlam.miammiamk.database
 
-abstract class DBModel {
+abstract class DbModel {
 }

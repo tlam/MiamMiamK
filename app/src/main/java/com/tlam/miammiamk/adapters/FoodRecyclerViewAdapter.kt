@@ -1,5 +1,6 @@
 package com.tlam.miammiamk.adapters
 
+import android.content.Intent
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,14 +11,16 @@ import android.widget.TextView
 import com.bumptech.glide.Glide
 
 import com.tlam.miammiamk.R
+import com.tlam.miammiamk.FoodActivity
 import com.tlam.miammiamk.models.Food
 
 class FoodRecyclerViewAdapter(private val foodList: List<Food>) : RecyclerView.Adapter<FoodRecyclerViewAdapter.FoodHolder>() {
 
     inner class FoodHolder(view: View) : RecyclerView.ViewHolder(view), View.OnClickListener {
         private var food: Food? = null
+        private val FOOD_KEY = "FOOD"
 
-        var title: TextView = view.findViewById<TextView>(R.id.title)
+        var name: TextView = view.findViewById<TextView>(R.id.name)
         var description: TextView = view.findViewById<TextView>(R.id.description)
         var image: ImageView = view.findViewById<ImageView>(R.id.imageView)
 
@@ -27,6 +30,11 @@ class FoodRecyclerViewAdapter(private val foodList: List<Food>) : RecyclerView.A
 
         override fun onClick(view: View) {
             Log.d("FoodRecyclerView", "CLICK Food!")
+            val context = itemView.context
+
+            val showFoodIntent = Intent(context, FoodActivity::class.java)
+            showFoodIntent.putExtra(FOOD_KEY, this.food)
+            context.startActivity(showFoodIntent)
         }
 
         fun bindFood(food: Food) {
@@ -46,9 +54,8 @@ class FoodRecyclerViewAdapter(private val foodList: List<Food>) : RecyclerView.A
     override fun onBindViewHolder(holder: FoodHolder, position: Int) {
         val food = foodList[position]
         holder.bindFood(food)
-        holder.title.text = food.title
+        holder.name.text = food.name
         holder.description.text = food.description
-        //holder.image.setImageResource(R.drawable.nigirizushi)
     }
 
     override fun getItemCount(): Int {

@@ -3,7 +3,7 @@ package com.tlam.miammiamk.models
 import android.os.Parcel
 import android.os.Parcelable
 
-data class Food(val title: String, val description: String, val source: String) : Parcelable {
+data class Food(val name: String, val description: String, val source: String) : Parcelable {
 
     private constructor(parcel: Parcel) : this(
             parcel.readString(),
@@ -11,7 +11,7 @@ data class Food(val title: String, val description: String, val source: String) 
             parcel.readString())
 
     override fun writeToParcel(dest: Parcel, flags: Int) {
-        dest.writeString(title)
+        dest.writeString(name)
         dest.writeString(description)
         dest.writeString(source)
     }

@@ -1,5 +1,6 @@
 package com.tlam.miammiamk
 
+import android.content.Context
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
@@ -15,8 +16,14 @@ class MainActivity : AppCompatActivity() {
     var cuisineList = ArrayList<Cuisine>()
     var adapter: CuisineRecyclerViewAdapter? = null
 
+    companion object {
+        val tag = "MainActivity"
+        var ctx: Context? = null
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        ctx = applicationContext
         setContentView(R.layout.activity_main)
 
         adapter = CuisineRecyclerViewAdapter(cuisineList)
