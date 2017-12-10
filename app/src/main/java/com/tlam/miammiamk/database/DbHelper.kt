@@ -17,6 +17,7 @@ class DbHelper(val dbName : String, val version : Int) : SQLiteOpenHelper(MainAc
         val FOOD_NAME: String = "name"
         val FOOD_DESCRIPTION: String = "description"
         val FOOD_SOURCE: String = "source"
+        val FOOD_CUISINE: String = "cuisine_id"
     }
 
     private val tag = "DbHelper"
@@ -36,6 +37,7 @@ class DbHelper(val dbName : String, val version : Int) : SQLiteOpenHelper(MainAc
                 $FOOD_NAME TEXT,
                 $FOOD_DESCRIPTION TEXT,
                 $FOOD_SOURCE TEXT,
+                $FOOD_CUISINE INTEGER,
                 FOREIGN KEY(cuisine_id) REFERENCES $TABLE_CUISINES(id)
             )
         """

@@ -5,7 +5,10 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.util.Log
+
 import com.tlam.miammiamk.adapters.CuisineRecyclerViewAdapter
+import com.tlam.miammiamk.database.Content
 import com.tlam.miammiamk.models.Cuisine
 import com.tlam.miammiamk.models.Food
 
@@ -36,6 +39,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun prepareCuisineData() {
+        var dbCuisines = Content.CUISINE.selectAll()
+        for (dbCuisine in dbCuisines) {
+            Log.d("MainActivity", dbCuisine.name)
+        }
+
         var cuisine = Cuisine(
                 "Japanese",
                 "Asian",
@@ -43,6 +51,7 @@ class MainActivity : AppCompatActivity() {
                         Food("Makizushi", "Cylindrical piece", "https://cdn.pixabay.com/photo/2016/03/05/22/23/asian-1239272__340.jpg"),
                         Food("Nigirizushi", "Topping on oval shaped ball of rice", "https://cdn.pixabay.com/photo/2017/02/05/11/48/sushi-2039735__340.jpg")))
         cuisineList.add(cuisine)
+        Content.CUISINE.insert(cuisine)
 
         cuisine = Cuisine(
                 "Italian",

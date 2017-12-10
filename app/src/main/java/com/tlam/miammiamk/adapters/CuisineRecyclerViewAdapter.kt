@@ -20,7 +20,7 @@ class CuisineRecyclerViewAdapter(private val cuisineList: List<Cuisine>) : Recyc
         private val CUISINE_KEY = "CUISINE"
         private var cuisine: Cuisine? = null
 
-        var title: TextView = view.findViewById<TextView>(R.id.title)
+        var name: TextView = view.findViewById<TextView>(R.id.name)
         var genre: TextView = view.findViewById<TextView>(R.id.genre)
 
         init {
@@ -51,7 +51,7 @@ class CuisineRecyclerViewAdapter(private val cuisineList: List<Cuisine>) : Recyc
     override fun onBindViewHolder(holder: CuisineHolder, position: Int) {
         val cuisine = cuisineList[position]
         holder.bindCuisine(cuisine)
-        holder.title.text = cuisine.title
+        holder.name.text = cuisine.name
         holder.genre.text = cuisine.genre
     }
 
