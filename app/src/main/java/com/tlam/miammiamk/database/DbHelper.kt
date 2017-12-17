@@ -30,6 +30,10 @@ class DbHelper(val dbName : String, val version : Int) : SQLiteOpenHelper(MainAc
             )
         """
 
+    private val dropTableCuisines = """
+        DROP TABLE $TABLE_CUISINES
+        """
+
     private val createTableFoods = """
         CREATE TABLE IF NOT EXISTS $TABLE_FOODS
             (

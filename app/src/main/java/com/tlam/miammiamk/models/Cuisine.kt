@@ -6,12 +6,14 @@ import android.os.Parcelable
 import com.tlam.miammiamk.database.DbModel
 
 class Cuisine(
+        val id: Long,
         val name: String,
         val genre: String,
         val foods: List<Food>
 ) : Parcelable, DbModel() {
 
     private constructor(parcel: Parcel) : this(
+            parcel.readLong(),
             parcel.readString(),
             parcel.readString(),
             arrayListOf<Food>().apply {
@@ -19,6 +21,7 @@ class Cuisine(
             })
 
     override fun writeToParcel(dest: Parcel, flags: Int) {
+        dest.writeLong(id)
         dest.writeString(name)
         dest.writeString(genre)
         dest.writeList(foods)

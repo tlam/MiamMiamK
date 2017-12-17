@@ -10,6 +10,10 @@ interface Crud<T> where T : DbModel {
     fun insert(what: T): Long
 
     fun insert(what: Collection<T>): List<Long>
+
+    fun replace(what: T): Long
+
+    fun replace(what: Collection<T>): List<Long>
 /*
     fun update(what: T): Int
 

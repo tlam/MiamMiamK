@@ -2,8 +2,6 @@ package com.tlam.miammiamk.database
 
 import android.content.ContentValues
 import android.util.Log
-import com.tlam.miammiamk.database.Crud
-import com.tlam.miammiamk.database.DbHelper
 import com.tlam.miammiamk.models.Cuisine
 import com.tlam.miammiamk.models.Food
 
@@ -49,6 +47,41 @@ object Content {
             return items
         }
 
+        override fun replace(what: Cuisine): Long {
+            val inserted = replace(listOf(what))
+            if (!inserted.isEmpty()) return inserted[0]
+            return 0
+        }
+
+        override fun replace(what: Collection<Cuisine>): List<Long> {
+            val db = DbHelper(name, version).writableDatabase
+            db.beginTransaction()
+            var replaced = 0
+            val items = mutableListOf<Long>()
+            what.forEach { item ->
+                val values = ContentValues()
+                val table = DbHelper.TABLE_CUISINES
+                values.put(DbHelper.ID, item.id)
+                values.put(DbHelper.CUISINE_NAME, item.name)
+                values.put(DbHelper.CUISINE_GENRE, item.genre)
+                val id = db.replace(table, null, values)
+                if (id > 0) {
+                    items.add(id)
+                    Log.v(tag, "Entry ID assigned [ $id ]")
+                    replaced++
+                }
+            }
+            val success = replaced == what.size
+            if (success) {
+                db.setTransactionSuccessful()
+            } else {
+                items.clear()
+            }
+            db.endTransaction()
+            db.close()
+            return items
+        }
+
         override fun selectAll(): List<Cuisine> {
             val db = DbHelper(name, version).writableDatabase
             val result = mutableListOf<Cuisine>()
@@ -62,7 +95,7 @@ object Content {
                 val id = cursor.getLong(cursor.getColumnIndexOrThrow(DbHelper.ID))
                 val name = cursor.getString(cursor.getColumnIndexOrThrow(DbHelper.CUISINE_NAME))
                 val genre = cursor.getString(cursor.getColumnIndexOrThrow(DbHelper.CUISINE_GENRE))
-                val cuisine = Cuisine(name, genre, foods)
+                val cuisine = Cuisine(id, name, genre, foods)
                 //cuisine.id = id
                 result.add(cuisine)
             }

@@ -39,21 +39,17 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun prepareCuisineData() {
-        var dbCuisines = Content.CUISINE.selectAll()
-        for (dbCuisine in dbCuisines) {
-            Log.d("MainActivity", dbCuisine.name)
-        }
-
         var cuisine = Cuisine(
+                1,
                 "Japanese",
                 "Asian",
                 listOf(
                         Food("Makizushi", "Cylindrical piece", "https://cdn.pixabay.com/photo/2016/03/05/22/23/asian-1239272__340.jpg"),
                         Food("Nigirizushi", "Topping on oval shaped ball of rice", "https://cdn.pixabay.com/photo/2017/02/05/11/48/sushi-2039735__340.jpg")))
         cuisineList.add(cuisine)
-        Content.CUISINE.insert(cuisine)
 
         cuisine = Cuisine(
+                2,
                 "Italian",
                 "European",
                 listOf(
@@ -62,12 +58,19 @@ class MainActivity : AppCompatActivity() {
         cuisineList.add(cuisine)
 
         cuisine = Cuisine(
+                3,
                 "Mexican",
                 "Central America",
                 listOf(
                         Food("Enchilada", "Corn tortilla rolled around a filling and covered with a chili pepper sauce", "https://cdn.pixabay.com/photo/2014/01/14/22/13/mexican-245240__340.jpg"),
                         Food("Fajita", "Any grilled meat usually served as a taco", "https://cdn.pixabay.com/photo/2014/11/07/17/14/tortillas-520808__340.jpg")))
         cuisineList.add(cuisine)
+
+        var dbCuisines = Content.CUISINE.selectAll()
+        for (dbCuisine in dbCuisines) {
+            Log.d("MainActivity", "${dbCuisine.id} ${dbCuisine.name}")
+        }
+        Content.CUISINE.replace(cuisineList)
 
         adapter?.notifyDataSetChanged()
     }
