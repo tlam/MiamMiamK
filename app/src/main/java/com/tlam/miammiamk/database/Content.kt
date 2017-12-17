@@ -8,44 +8,10 @@ import com.tlam.miammiamk.models.Food
 object Content {
 
     private val tag = "Db"
-    private val version = 1
+    private val version = 2
     private val name = "miammiamk"
 
     val CUISINE = object : Crud<Cuisine> {
-
-        override fun insert(what: Cuisine): Long {
-            val inserted = insert(listOf(what))
-            if (!inserted.isEmpty()) return inserted[0]
-            return 0
-        }
-
-        override fun insert(what: Collection<Cuisine>): List<Long> {
-            val db = DbHelper(name, version).writableDatabase
-            db.beginTransaction()
-            var inserted = 0
-            val items = mutableListOf<Long>()
-            what.forEach { item ->
-                val values = ContentValues()
-                val table = DbHelper.TABLE_CUISINES
-                values.put(DbHelper.CUISINE_NAME, item.name)
-                values.put(DbHelper.CUISINE_GENRE, item.genre)
-                val id = db.insert(table, null, values)
-                if (id > 0) {
-                    items.add(id)
-                    Log.v(tag, "Entry ID assigned [ $id ]")
-                    inserted++
-                }
-            }
-            val success = inserted == what.size
-            if (success) {
-                db.setTransactionSuccessful()
-            } else {
-                items.clear()
-            }
-            db.endTransaction()
-            db.close()
-            return items
-        }
 
         override fun replace(what: Cuisine): Long {
             val inserted = replace(listOf(what))
@@ -67,7 +33,7 @@ object Content {
                 val id = db.replace(table, null, values)
                 if (id > 0) {
                     items.add(id)
-                    Log.v(tag, "Entry ID assigned [ $id ]")
+                    Log.v(tag, "Cuisine ID assigned [ $id ]")
                     replaced++
                 }
             }
@@ -85,7 +51,6 @@ object Content {
         override fun selectAll(): List<Cuisine> {
             val db = DbHelper(name, version).writableDatabase
             val result = mutableListOf<Cuisine>()
-            val foods = mutableListOf<Food>()
             val cursor = db.query(
                     true,
                     DbHelper.TABLE_CUISINES,
@@ -95,9 +60,70 @@ object Content {
                 val id = cursor.getLong(cursor.getColumnIndexOrThrow(DbHelper.ID))
                 val name = cursor.getString(cursor.getColumnIndexOrThrow(DbHelper.CUISINE_NAME))
                 val genre = cursor.getString(cursor.getColumnIndexOrThrow(DbHelper.CUISINE_GENRE))
+                val foods = mutableListOf<Food>()
                 val cuisine = Cuisine(id, name, genre, foods)
-                //cuisine.id = id
                 result.add(cuisine)
+            }
+            cursor.close()
+            return result
+        }
+    }
+
+    val FOOD = object : Crud<Food> {
+
+        override fun replace(what: Food): Long {
+            val inserted = replace(listOf(what))
+            if (!inserted.isEmpty()) return inserted[0]
+            return 0
+        }
+
+        override fun replace(what: Collection<Food>): List<Long> {
+            val db = DbHelper(name, version).writableDatabase
+            db.beginTransaction()
+            var replaced = 0
+            val items = mutableListOf<Long>()
+            what.forEach { item ->
+                val values = ContentValues()
+                val table = DbHelper.TABLE_FOODS
+                values.put(DbHelper.ID, item.id)
+                values.put(DbHelper.FOOD_NAME, item.name)
+                values.put(DbHelper.FOOD_DESCRIPTION, item.description)
+                values.put(DbHelper.FOOD_SOURCE, item.source)
+                values.put(DbHelper.FOOD_CUISINE, item.cuisineId)
+                val id = db.replace(table, null, values)
+                if (id > 0) {
+                    items.add(id)
+                    Log.v(tag, "Food ID assigned [ $id ]")
+                    replaced++
+                }
+            }
+            val success = replaced == what.size
+            if (success) {
+                db.setTransactionSuccessful()
+            } else {
+                items.clear()
+            }
+            db.endTransaction()
+            db.close()
+            return items
+        }
+
+        override fun selectAll(): List<Food> {
+            val db = DbHelper(name, version).writableDatabase
+            val result = mutableListOf<Food>()
+            val cursor = db.query(
+                    true,
+                    DbHelper.TABLE_FOODS,
+                    null, null, null, null, null, DbHelper.FOOD_CUISINE, null
+            )
+            while (cursor.moveToNext()) {
+                val id = cursor.getLong(cursor.getColumnIndexOrThrow(DbHelper.ID))
+                val name = cursor.getString(cursor.getColumnIndexOrThrow(DbHelper.FOOD_NAME))
+                val description = cursor.getString(cursor.getColumnIndexOrThrow(DbHelper.FOOD_DESCRIPTION))
+                val source = cursor.getString(cursor.getColumnIndexOrThrow(DbHelper.FOOD_SOURCE))
+                val cuisineId = cursor.getLong(cursor.getColumnIndexOrThrow(DbHelper.FOOD_CUISINE))
+                val food = Food(id, name, description, source, cuisineId)
+                result.add(food)
             }
             cursor.close()
             return result

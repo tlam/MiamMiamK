@@ -6,11 +6,11 @@ interface Crud<T> where T : DbModel {
         val BROADCAST_ACTION = "com.tlam.miammiamk.database.crud"
         val BROADCAST_EXTRAS_KEY_CRUD_OPERATION_RESULT = "crud_result"
     }
-
+/*
     fun insert(what: T): Long
 
     fun insert(what: Collection<T>): List<Long>
-
+*/
     fun replace(what: T): Long
 
     fun replace(what: Collection<T>): List<Long>

@@ -2,13 +2,10 @@ package com.tlam.miammiamk
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.CardView
 import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
 
-import com.tlam.miammiamk.adapters.FoodRecyclerViewAdapter
 import com.tlam.miammiamk.models.Food
 
 class FoodActivity : AppCompatActivity() {

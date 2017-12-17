@@ -39,38 +39,81 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun prepareCuisineData() {
+        /*
         var cuisine = Cuisine(
                 1,
                 "Japanese",
                 "Asian",
-                listOf(
-                        Food("Makizushi", "Cylindrical piece", "https://cdn.pixabay.com/photo/2016/03/05/22/23/asian-1239272__340.jpg"),
-                        Food("Nigirizushi", "Topping on oval shaped ball of rice", "https://cdn.pixabay.com/photo/2017/02/05/11/48/sushi-2039735__340.jpg")))
+                mutableListOf(
+                        Food(
+                                1,"Makizushi",
+                                "Cylindrical piece",
+                                "https://cdn.pixabay.com/photo/2016/03/05/22/23/asian-1239272__340.jpg",
+                                1),
+                        Food(
+                                2,
+                                "Nigirizushi",
+                                "Topping on oval shaped ball of rice",
+                                "https://cdn.pixabay.com/photo/2017/02/05/11/48/sushi-2039735__340.jpg",
+                                1)))
         cuisineList.add(cuisine)
 
         cuisine = Cuisine(
                 2,
                 "Italian",
                 "European",
-                listOf(
-                        Food("Farfalle", "Butterfly looking", "https://cdn.pixabay.com/photo/2014/10/20/22/04/farfalle-495747__340.jpg"),
-                        Food("Spaghetti", "Long, thin and cylindrical", "https://cdn.pixabay.com/photo/2017/11/08/22/18/spaghetti-2931846__340.jpg")))
+                mutableListOf(
+                        Food(
+                                3,
+                                "Farfalle",
+                                "Butterfly looking",
+                                "https://cdn.pixabay.com/photo/2014/10/20/22/04/farfalle-495747__340.jpg",
+                                2),
+                        Food(
+                                4,
+                                "Spaghetti",
+                                "Long, thin and cylindrical",
+                                "https://cdn.pixabay.com/photo/2017/11/08/22/18/spaghetti-2931846__340.jpg",
+                                2)))
         cuisineList.add(cuisine)
 
         cuisine = Cuisine(
                 3,
                 "Mexican",
                 "Central America",
-                listOf(
-                        Food("Enchilada", "Corn tortilla rolled around a filling and covered with a chili pepper sauce", "https://cdn.pixabay.com/photo/2014/01/14/22/13/mexican-245240__340.jpg"),
-                        Food("Fajita", "Any grilled meat usually served as a taco", "https://cdn.pixabay.com/photo/2014/11/07/17/14/tortillas-520808__340.jpg")))
+                mutableListOf(
+                        Food(
+                                5,
+                                "Enchilada",
+                                "Corn tortilla rolled around a filling and covered with a chili pepper sauce",
+                                "https://cdn.pixabay.com/photo/2014/01/14/22/13/mexican-245240__340.jpg",
+                                3),
+                        Food(
+                                6,
+                                "Fajita",
+                                "Any grilled meat usually served as a taco",
+                                "https://cdn.pixabay.com/photo/2014/11/07/17/14/tortillas-520808__340.jpg",
+                                3)))
         cuisineList.add(cuisine)
 
+        for (cuisine in cuisineList) {
+            Content.CUISINE.replace(cuisine)
+            Content.FOOD.replace(cuisine.foods)
+        }
+        */
+
+        var dbFoods = Content.FOOD.selectAll()
         var dbCuisines = Content.CUISINE.selectAll()
         for (dbCuisine in dbCuisines) {
-            Log.d("MainActivity", "${dbCuisine.id} ${dbCuisine.name}")
+            Log.d("MainActivity:Cuisine", "${dbCuisine.id} ${dbCuisine.name}")
+            for (food in dbFoods) {
+                if (dbCuisine.id == food.cuisineId) {
+                    dbCuisine.foods.add(food)
+                    Log.d("MainActivity:Food", "${food.id} ${food.name}")
+                }
+            }
+            cuisineList.add(dbCuisine)
         }
-        Content.CUISINE.replace(cuisineList)
 
         adapter?.notifyDataSetChanged()
     }

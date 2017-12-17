@@ -9,7 +9,7 @@ class Cuisine(
         val id: Long,
         val name: String,
         val genre: String,
-        val foods: List<Food>
+        var foods: MutableList<Food>
 ) : Parcelable, DbModel() {
 
     private constructor(parcel: Parcel) : this(

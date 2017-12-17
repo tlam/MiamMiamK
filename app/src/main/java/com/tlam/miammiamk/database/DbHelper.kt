@@ -54,6 +54,7 @@ class DbHelper(val dbName : String, val version : Int) : SQLiteOpenHelper(MainAc
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
         // Ignore for now.
+        Log.d(tag, "Calling on upgrade")
     }
 
 }

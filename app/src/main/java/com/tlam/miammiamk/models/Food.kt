@@ -3,17 +3,29 @@ package com.tlam.miammiamk.models
 import android.os.Parcel
 import android.os.Parcelable
 
-data class Food(val name: String, val description: String, val source: String) : Parcelable {
+import com.tlam.miammiamk.database.DbModel
+
+data class Food(
+        val id: Long,
+        val name: String,
+        val description: String,
+        val source: String,
+        val cuisineId: Long
+) : Parcelable, DbModel() {
 
     private constructor(parcel: Parcel) : this(
+            parcel.readLong(),
             parcel.readString(),
             parcel.readString(),
-            parcel.readString())
+            parcel.readString(),
+            parcel.readLong())
 
     override fun writeToParcel(dest: Parcel, flags: Int) {
+        dest.writeLong(id)
         dest.writeString(name)
         dest.writeString(description)
         dest.writeString(source)
+        dest.writeLong(cuisineId)
     }
 
     override fun describeContents() = 0
