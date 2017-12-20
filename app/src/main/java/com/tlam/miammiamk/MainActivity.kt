@@ -5,7 +5,10 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.support.v7.widget.Toolbar
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 
 import com.tlam.miammiamk.adapters.CuisineRecyclerViewAdapter
 import com.tlam.miammiamk.database.Content
@@ -22,12 +25,16 @@ class MainActivity : AppCompatActivity() {
     companion object {
         val tag = "MainActivity"
         var ctx: Context? = null
+        var toolbar: Toolbar? = null
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         ctx = applicationContext
         setContentView(R.layout.activity_main)
+
+        toolbar = findViewById<Toolbar>(R.id.toolbar)
+        setSupportActionBar(toolbar)
 
         adapter = CuisineRecyclerViewAdapter(cuisineList)
         recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
@@ -37,6 +44,23 @@ class MainActivity : AppCompatActivity() {
 
         prepareCuisineData()
     }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        menuInflater.inflate(R.menu.main, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.action_refresh -> {
+                Log.v(tag, "Refreshing data")
+                return true
+            }
+            else -> return super.onOptionsItemSelected(item)
+        }
+    }
+
 
     private fun prepareCuisineData() {
         /*
