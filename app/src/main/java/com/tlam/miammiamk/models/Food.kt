@@ -10,7 +10,7 @@ data class Food(
         val name: String,
         val description: String,
         val source: String,
-        val cuisineId: Long
+        var cuisineId: Long
 ) : Parcelable, DbModel() {
 
     private constructor(parcel: Parcel) : this(

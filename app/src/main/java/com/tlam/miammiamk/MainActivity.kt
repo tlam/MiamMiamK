@@ -22,7 +22,6 @@ import com.tlam.miammiamk.services.MainService
 class MainActivity : AppCompatActivity() {
 
     private lateinit var linearLayoutManager: LinearLayoutManager
-    private var service: MainService? = null
     var recyclerView: RecyclerView? = null
     var cuisineList = ArrayList<Cuisine>()
     var adapter: CuisineRecyclerViewAdapter? = null
@@ -32,23 +31,7 @@ class MainActivity : AppCompatActivity() {
         var ctx: Context? = null
         var toolbar: Toolbar? = null
     }
-/*
-    private val serviceConnection = object : ServiceConnection {
-        override fun onServiceDisconnected(p0: ComponentName?) {
-            service = null
-            synchronize.enabled = false
-        }
 
-        override fun onServiceConnected(p0: ComponentName?, binder: IBinder?) {
-            if (binder is MainService.MainServiceBinder) {
-                service = binder.getService()
-                service?.let {
-                    synchronize.enabled = true
-                }
-            }
-        }
-    }
-*/
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         ctx = applicationContext
@@ -76,6 +59,12 @@ class MainActivity : AppCompatActivity() {
         when (item.itemId) {
             R.id.action_refresh -> {
                 Log.v(tag, "Refreshing data")
+                cuisineList.clear()
+                prepareCuisineData()
+                return true
+            }
+            R.id.action_sync -> {
+                Log.v(tag, "Syncing data")
                 startService()
                 return true
             }
@@ -94,69 +83,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun prepareCuisineData() {
-        /*
-        var cuisine = Cuisine(
-                1,
-                "Japanese",
-                "Asian",
-                mutableListOf(
-                        Food(
-                                1,"Makizushi",
-                                "Cylindrical piece",
-                                "https://cdn.pixabay.com/photo/2016/03/05/22/23/asian-1239272__340.jpg",
-                                1),
-                        Food(
-                                2,
-                                "Nigirizushi",
-                                "Topping on oval shaped ball of rice",
-                                "https://cdn.pixabay.com/photo/2017/02/05/11/48/sushi-2039735__340.jpg",
-                                1)))
-        cuisineList.add(cuisine)
-
-        cuisine = Cuisine(
-                2,
-                "Italian",
-                "European",
-                mutableListOf(
-                        Food(
-                                3,
-                                "Farfalle",
-                                "Butterfly looking",
-                                "https://cdn.pixabay.com/photo/2014/10/20/22/04/farfalle-495747__340.jpg",
-                                2),
-                        Food(
-                                4,
-                                "Spaghetti",
-                                "Long, thin and cylindrical",
-                                "https://cdn.pixabay.com/photo/2017/11/08/22/18/spaghetti-2931846__340.jpg",
-                                2)))
-        cuisineList.add(cuisine)
-
-        cuisine = Cuisine(
-                3,
-                "Mexican",
-                "Central America",
-                mutableListOf(
-                        Food(
-                                5,
-                                "Enchilada",
-                                "Corn tortilla rolled around a filling and covered with a chili pepper sauce",
-                                "https://cdn.pixabay.com/photo/2014/01/14/22/13/mexican-245240__340.jpg",
-                                3),
-                        Food(
-                                6,
-                                "Fajita",
-                                "Any grilled meat usually served as a taco",
-                                "https://cdn.pixabay.com/photo/2014/11/07/17/14/tortillas-520808__340.jpg",
-                                3)))
-        cuisineList.add(cuisine)
-
-        for (cuisine in cuisineList) {
-            Content.CUISINE.replace(cuisine)
-            Content.FOOD.replace(cuisine.foods)
-        }
-        */
-
         var dbFoods = Content.FOOD.selectAll()
         var dbCuisines = Content.CUISINE.selectAll()
         for (dbCuisine in dbCuisines) {

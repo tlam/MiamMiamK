@@ -68,12 +68,16 @@ class MainService : Service(), DataSynchronization {
                     override fun onResponse(call: Call<List<Cuisine>>?, response: Response<List<Cuisine>>?
 ) {
                         response?.let {
-                            Log.i(tag, "Response received")
                             if (response.isSuccessful) {
-                                Log.i(tag, "Response is successful")
                                 val cuisines = response.body()
                                 cuisines?.let {
-                                    Content.CUISINE.replace(cuisines)
+                                    for (cuisine in cuisines) {
+                                        for (food in cuisine.foods) {
+                                            food.cuisineId = cuisine.id
+                                        }
+                                        Content.CUISINE.replace(cuisine)
+                                        Content.FOOD.replace(cuisine.foods)
+                                    }
                                 }
                             }
                         }
