@@ -13,7 +13,7 @@ class DbHelper(val dbName : String, val version : Int) : SQLiteOpenHelper(MainAc
         val TABLE_CUISINES = "cuisines"
         val TABLE_FOODS = "foods"
         val CUISINE_NAME: String = "name"
-        val CUISINE_GENRE: String = "genre"
+        val CUISINE_ORIGIN: String = "origin"
         val FOOD_NAME: String = "name"
         val FOOD_DESCRIPTION: String = "description"
         val FOOD_SOURCE: String = "source"
@@ -26,7 +26,7 @@ class DbHelper(val dbName : String, val version : Int) : SQLiteOpenHelper(MainAc
             (
                 $ID INTEGER PRIMARY KEY AUTOINCREMENT,
                 $CUISINE_NAME TEXT,
-                $CUISINE_GENRE TEXT
+                $CUISINE_ORIGIN TEXT
             )
         """
 

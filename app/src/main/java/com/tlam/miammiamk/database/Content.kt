@@ -29,7 +29,7 @@ object Content {
                 val table = DbHelper.TABLE_CUISINES
                 values.put(DbHelper.ID, item.id)
                 values.put(DbHelper.CUISINE_NAME, item.name)
-                values.put(DbHelper.CUISINE_GENRE, item.genre)
+                values.put(DbHelper.CUISINE_ORIGIN, item.origin)
                 val id = db.replace(table, null, values)
                 if (id > 0) {
                     items.add(id)
@@ -59,9 +59,9 @@ object Content {
             while (cursor.moveToNext()) {
                 val id = cursor.getLong(cursor.getColumnIndexOrThrow(DbHelper.ID))
                 val name = cursor.getString(cursor.getColumnIndexOrThrow(DbHelper.CUISINE_NAME))
-                val genre = cursor.getString(cursor.getColumnIndexOrThrow(DbHelper.CUISINE_GENRE))
+                val origin = cursor.getString(cursor.getColumnIndexOrThrow(DbHelper.CUISINE_ORIGIN))
                 val foods = mutableListOf<Food>()
-                val cuisine = Cuisine(id, name, genre, foods)
+                val cuisine = Cuisine(id, name, origin, foods)
                 result.add(cuisine)
             }
             cursor.close()

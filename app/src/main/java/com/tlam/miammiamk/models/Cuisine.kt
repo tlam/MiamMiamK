@@ -8,7 +8,7 @@ import com.tlam.miammiamk.database.DbModel
 class Cuisine(
         val id: Long,
         val name: String,
-        val genre: String,
+        val origin: String,
         var foods: MutableList<Food>
 ) : Parcelable, DbModel() {
 
@@ -23,7 +23,7 @@ class Cuisine(
     override fun writeToParcel(dest: Parcel, flags: Int) {
         dest.writeLong(id)
         dest.writeString(name)
-        dest.writeString(genre)
+        dest.writeString(origin)
         dest.writeList(foods)
     }
 

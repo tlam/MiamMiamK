@@ -1,7 +1,11 @@
 package com.tlam.miammiamk
 
+import android.content.ComponentName
 import android.content.Context
+import android.content.Intent
+import android.content.ServiceConnection
 import android.os.Bundle
+import android.os.IBinder
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -13,11 +17,12 @@ import android.view.MenuItem
 import com.tlam.miammiamk.adapters.CuisineRecyclerViewAdapter
 import com.tlam.miammiamk.database.Content
 import com.tlam.miammiamk.models.Cuisine
-import com.tlam.miammiamk.models.Food
+import com.tlam.miammiamk.services.MainService
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var linearLayoutManager: LinearLayoutManager
+    private var service: MainService? = null
     var recyclerView: RecyclerView? = null
     var cuisineList = ArrayList<Cuisine>()
     var adapter: CuisineRecyclerViewAdapter? = null
@@ -27,7 +32,23 @@ class MainActivity : AppCompatActivity() {
         var ctx: Context? = null
         var toolbar: Toolbar? = null
     }
+/*
+    private val serviceConnection = object : ServiceConnection {
+        override fun onServiceDisconnected(p0: ComponentName?) {
+            service = null
+            synchronize.enabled = false
+        }
 
+        override fun onServiceConnected(p0: ComponentName?, binder: IBinder?) {
+            if (binder is MainService.MainServiceBinder) {
+                service = binder.getService()
+                service?.let {
+                    synchronize.enabled = true
+                }
+            }
+        }
+    }
+*/
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         ctx = applicationContext
@@ -55,12 +76,22 @@ class MainActivity : AppCompatActivity() {
         when (item.itemId) {
             R.id.action_refresh -> {
                 Log.v(tag, "Refreshing data")
+                startService()
                 return true
             }
             else -> return super.onOptionsItemSelected(item)
         }
     }
 
+    private fun startService() {
+        val serviceIntent = Intent(this, MainService::class.java)
+        startService(serviceIntent)
+    }
+
+    private fun stopService() {
+        val serviceIntent = Intent(this, MainService::class.java)
+        stopService(serviceIntent)
+    }
 
     private fun prepareCuisineData() {
         /*

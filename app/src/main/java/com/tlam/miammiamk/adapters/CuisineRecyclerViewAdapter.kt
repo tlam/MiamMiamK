@@ -21,7 +21,7 @@ class CuisineRecyclerViewAdapter(private val cuisineList: List<Cuisine>) : Recyc
         private var cuisine: Cuisine? = null
 
         var name: TextView = view.findViewById<TextView>(R.id.name)
-        var genre: TextView = view.findViewById<TextView>(R.id.genre)
+        var origin: TextView = view.findViewById<TextView>(R.id.origin)
 
         init {
             view.setOnClickListener(this)
@@ -30,7 +30,6 @@ class CuisineRecyclerViewAdapter(private val cuisineList: List<Cuisine>) : Recyc
         override fun onClick(view: View) {
             Log.d("RecyclerView", "CLICK!")
             val context = itemView.context
-            //Toast.makeText(context, "HELLO", Toast.LENGTH_SHORT).show()
 
             val showFoodListIntent = Intent(context, FoodListActivity::class.java)
             showFoodListIntent.putExtra(CUISINE_KEY, this.cuisine)
@@ -52,7 +51,7 @@ class CuisineRecyclerViewAdapter(private val cuisineList: List<Cuisine>) : Recyc
         val cuisine = cuisineList[position]
         holder.bindCuisine(cuisine)
         holder.name.text = cuisine.name
-        holder.genre.text = cuisine.genre
+        holder.origin.text = cuisine.origin
     }
 
     override fun getItemCount(): Int {

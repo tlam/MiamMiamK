@@ -22,11 +22,11 @@ class MainService : Service(), DataSynchronization {
  
     override fun onCreate() { 
         super.onCreate() 
-        Log.v(tag, "[ ON CREATE ]") 
+        Log.v(tag, "[ ON MainService CREATE ]")
     } 
  
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int { 
-        Log.v(tag, "[ ON START COMMAND ]") 
+        Log.v(tag, "[ ON MainService START COMMAND ]")
         synchronize() 
         return Service.START_STICKY 
     } 
@@ -63,28 +63,27 @@ class MainService : Service(), DataSynchronization {
     }
  
     private fun fetchCuisines(service: CuisineBackendService) {
-        service
-                .getCuisines()
-                .enqueue(
-                        object : Callback<List<Cuisine>> {
-                            override fun onResponse(
-                                    call: Call<List<Cuisine>>?, response: Response<List<Cuisine>>?
-                            ) {
-                                response?.let {
-                                    if (response.isSuccessful) {
-                                        val cuisines = response.body()
-                                        cuisines?.let {
-                                            Content.CUISINE.replace(cuisines)
-                                        }
-                                    }
+        service.getCuisines().enqueue(
+                object : Callback<List<Cuisine>> {
+                    override fun onResponse(call: Call<List<Cuisine>>?, response: Response<List<Cuisine>>?
+) {
+                        response?.let {
+                            Log.i(tag, "Response received")
+                            if (response.isSuccessful) {
+                                Log.i(tag, "Response is successful")
+                                val cuisines = response.body()
+                                cuisines?.let {
+                                    Content.CUISINE.replace(cuisines)
                                 }
                             }
-
-                            override fun onFailure(call: Call<List<Cuisine>>?, t: Throwable?) {
-                                Log.e(tag, "We couldn't fetch cuisines.")
-                            }
                         }
-                )
+                    }
+
+                    override fun onFailure(call: Call<List<Cuisine>>?, t: Throwable?) {
+                        Log.e(tag, "We couldn't fetch cuisines.")
+                    }
+                }
+        )
     }
  
     private fun getServiceBinder(): MainServiceBinder = MainServiceBinder()
