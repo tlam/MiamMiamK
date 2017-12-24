@@ -12,20 +12,23 @@ class FoodActivity : AppCompatActivity() {
     private val FOOD_KEY = "FOOD"
     private var food: Food? = null
     var imageView: ImageView? = null
-    var textView: TextView? = null
+    var nameView: TextView? = null
+    var descriptionView: TextView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.food_item)
 
         imageView = findViewById<ImageView>(R.id.image_view)
-        textView = findViewById<TextView>(R.id.name)
+        nameView = findViewById<TextView>(R.id.name)
+        descriptionView = findViewById<TextView>(R.id.description)
         food = intent.getParcelableExtra<Food>(FOOD_KEY) as Food
         food?.let {
             Glide.with(this)
                     .load(it.source)
                     .into(imageView)
-            textView!!.text = it.name
+            nameView!!.text = it.name
+            descriptionView!!.text = it.description
         }
     }
 }
