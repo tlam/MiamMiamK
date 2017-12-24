@@ -15,7 +15,5 @@ interface CuisineBackendService {
     } 
  
     @GET("cuisines/data.json") 
-    fun getCuisines( 
-          @HeaderMap headers: Map<String, String> 
-    ): Call<List<Cuisine>>
+    fun getCuisines(): Call<List<Cuisine>>
 }
