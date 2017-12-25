@@ -54,7 +54,7 @@ object Content {
             val cursor = db.query(
                     true,
                     DbHelper.TABLE_CUISINES,
-                    null, null, null, null, null, null, null
+                    null, null, null, null, null, DbHelper.CUISINE_NAME, null
             )
             while (cursor.moveToNext()) {
                 val id = cursor.getLong(cursor.getColumnIndexOrThrow(DbHelper.ID))
@@ -65,6 +65,28 @@ object Content {
                 result.add(cuisine)
             }
             cursor.close()
+
+            /* TODO: use a hashtable to store the cuisines, return sorted array of cuisines by name
+            val query = """
+                SELECT cuisines.id AS cuisine_id, cuisines.name AS cuisine_name, cuisines.origin,
+                       foods.id AS food_id, foods.name AS food_name, foods.description, foods.source
+                FROM cuisines
+                INNER JOIN foods ON foods.cuisine_id = cuisines.id
+                ORDER BY cuisines.name, foods.name
+                """
+            val cursor = db.rawQuery(DbHelper., null)
+            while (cursor.moveToNext()) {
+                val cuisineId = cursor.getLong(cursor.getColumnIndexOrThrow("cuisine_id"))
+                val cuisineName = cursor.getString(cursor.getColumnIndexOrThrow("cuisine_name"))
+                val origin = cursor.getString(cursor.getColumnIndexOrThrow(DbHelper.CUISINE_ORIGIN))
+                val foodId = cursor.getLong(cursor.getColumnIndexOrThrow("food_id"))
+                val foodName = cursor.getString(cursor.getColumnIndexOrThrow("food_name"))
+                val foods = mutableListOf<Food>()
+                val cuisine = Cuisine(cuisineId, cuisineName, origin, foods)
+                result.add(cuisine)
+            }
+            joinCursor.close()
+            */
             return result
         }
     }
@@ -114,7 +136,7 @@ object Content {
             val cursor = db.query(
                     true,
                     DbHelper.TABLE_FOODS,
-                    null, null, null, null, null, DbHelper.FOOD_CUISINE, null
+                    null, null, null, null, null, DbHelper.FOOD_NAME, null
             )
             while (cursor.moveToNext()) {
                 val id = cursor.getLong(cursor.getColumnIndexOrThrow(DbHelper.ID))

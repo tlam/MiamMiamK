@@ -13,6 +13,7 @@ import android.support.v7.widget.Toolbar
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 
 import com.tlam.miammiamk.adapters.CuisineRecyclerViewAdapter
 import com.tlam.miammiamk.database.Content
@@ -61,6 +62,7 @@ class MainActivity : AppCompatActivity() {
                 Log.v(tag, "Refreshing data")
                 cuisineList.clear()
                 prepareCuisineData()
+                Toast.makeText(this, "Cuisines refreshed!", Toast.LENGTH_LONG).show()
                 return true
             }
             R.id.action_sync -> {
@@ -86,11 +88,9 @@ class MainActivity : AppCompatActivity() {
         var dbFoods = Content.FOOD.selectAll()
         var dbCuisines = Content.CUISINE.selectAll()
         for (dbCuisine in dbCuisines) {
-            Log.d("MainActivity:Cuisine", "${dbCuisine.id} ${dbCuisine.name}")
             for (food in dbFoods) {
                 if (dbCuisine.id == food.cuisineId) {
                     dbCuisine.foods.add(food)
-                    Log.d("MainActivity:Food", "${food.id} ${food.name}")
                 }
             }
             cuisineList.add(dbCuisine)

@@ -45,6 +45,7 @@ class DbHelper(val dbName : String, val version : Int) : SQLiteOpenHelper(MainAc
                 FOREIGN KEY(cuisine_id) REFERENCES $TABLE_CUISINES(id)
             )
         """
+
     override fun onCreate(db: SQLiteDatabase) {
         Log.d(tag, "Database [ CREATING ]")
         db.execSQL(createTableCuisines)

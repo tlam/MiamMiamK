@@ -64,29 +64,29 @@ class MainService : Service(), DataSynchronization {
  
     private fun fetchCuisines(service: CuisineBackendService) {
         service.getCuisines().enqueue(
-                object : Callback<List<Cuisine>> {
-                    override fun onResponse(call: Call<List<Cuisine>>?, response: Response<List<Cuisine>>?
+            object : Callback<List<Cuisine>> {
+                override fun onResponse(call: Call<List<Cuisine>>?, response: Response<List<Cuisine>>?
 ) {
-                        response?.let {
-                            if (response.isSuccessful) {
-                                val cuisines = response.body()
-                                cuisines?.let {
-                                    for (cuisine in cuisines) {
-                                        for (food in cuisine.foods) {
-                                            food.cuisineId = cuisine.id
-                                        }
-                                        Content.CUISINE.replace(cuisine)
-                                        Content.FOOD.replace(cuisine.foods)
+                    response?.let {
+                        if (response.isSuccessful) {
+                            val cuisines = response.body()
+                            cuisines?.let {
+                                for (cuisine in cuisines) {
+                                    for (food in cuisine.foods) {
+                                        food.cuisineId = cuisine.id
                                     }
+                                    Content.CUISINE.replace(cuisine)
+                                    Content.FOOD.replace(cuisine.foods)
                                 }
                             }
                         }
                     }
-
-                    override fun onFailure(call: Call<List<Cuisine>>?, t: Throwable?) {
-                        Log.e(tag, "We couldn't fetch cuisines.")
-                    }
                 }
+
+                override fun onFailure(call: Call<List<Cuisine>>?, t: Throwable?) {
+                    Log.e(tag, "We couldn't fetch cuisines.")
+                }
+            }
         )
     }
  
